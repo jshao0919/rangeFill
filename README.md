@@ -1,7 +1,6 @@
 # rangeFill
 
-Convert scanned Rifle/Carbine Table VI roll-up PDFs directly to Excel. No ChatGPT step, CSV transcription, API key, or network service is needed during conversion.
-
+Convert scanned Rifle/Carbine Table VI roll-up PDFs directly to Excel. 
 `pdf_to_xlsx.py` writes the same one-lane-per-row layout as `rangeCardData.xlsx`: metadata in A–G, forty hits in H–AU, calculated hits in AV, independently read printed total in AW, and their difference in AX. This layout is accepted by the supplied `xlsx_toForm.py`. All printed lanes are retained, including zero-filled lanes. Handwritten names, ranks, and DoD IDs are left blank for entry in D–F.
 
 ## Install
@@ -48,9 +47,7 @@ Exit codes:
 - **2:** the workbook was written, with items requiring review.
 - **1:** invalid input/arguments, no successfully converted pages, or the output could not be written. Page failures are recorded in the review sheet; successful pages from a mixed batch are retained with exit code 2.
 
-These checks detect many recognition errors, including missing rows and mismatched totals, but equal totals alone cannot prove every individual cell. Severe blur, glare, cropped tables, heavy marks over digits, or a different form layout may require a clearer scan. The converter reports uncertainty rather than filling cells to obtain a passing score.
 
-On the supplied `range24.pdf`, all **640 hits** match the independently entered workbook, all **16 lane labels** are identified, and all **16 printed totals** match the calculated scores. Lane 1's forty hits sum to **24**. Regression checks also cover +6° and −7° rotations, perspective distortion, 90° rotation, and upside-down pages: lane 1 is correct in all of them, and accepted hits remain faithful. In the stress cases, one damaged hit and one unclear printed zero can remain flagged, along with some unclear distance labels. These are transformed copies of one sample, not a measured accuracy rate on independent photographs.
 
 ## Tests
 
@@ -64,4 +61,3 @@ RANGEFILL_FORM_READER=/path/to/xlsx_toForm.py \
 python -m pytest -q
 ```
 
-The supplied documents are not committed to the repository. The regression fixture contains only the independently entered numeric hit strings and totals. Scan-dependent checks are explicitly skipped when their files are not supplied.
